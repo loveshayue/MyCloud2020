@@ -12,6 +12,8 @@
         <module>mycloud-consumer-order-80</module>
         <module>mycloud-api-commons</module>
         <module>mycloud-eureka-server-7001</module>
+        <module>mycloud-eureka-server-7002</module>
+        <module>mycloud-provider-payment-8002</module>
     </modules>
     <packaging>pom</packaging>
 

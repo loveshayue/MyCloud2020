@@ -11,10 +11,10 @@
 
     <artifactId>mycloud-provider-payment-8001</artifactId>
     <dependencies>
-        <!--<dependency>
+        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>-->
+        </dependency>
         <dependency>
             <groupId>com.mytest.springcloud</groupId>
             <artifactId>mycloud-api-commons</artifactId>

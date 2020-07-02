@@ -1,12 +1,17 @@
 package com.mytest.springcloud.controller;
 
+import ch.qos.logback.core.html.IThrowableRenderer;
 import com.mytest.springcloud.entity.CommonResult;
 import com.mytest.springcloud.entity.Payment;
 import com.mytest.springcloud.service.PaymentService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (Payment)表控制层
@@ -23,6 +28,10 @@ public class PaymentController {
      */
     @Resource
     private PaymentService paymentService;
+    @Value("${server.port}")
+    private String serverPort;
+    @Resource
+    private DiscoveryClient discoveryClient;
 
     /**
      * 通过主键查询单条数据
@@ -35,9 +44,9 @@ public class PaymentController {
         Payment payment = this.paymentService.queryById(id);
         log.info("search result :" + payment);
         if (payment != null) {
-            return new CommonResult(200, "success", payment);
+            return new CommonResult(200, "success, serverport" + serverPort, payment);
         } else {
-            return new CommonResult(444, "fail", null);
+            return new CommonResult(444, "fail, serverport" + serverPort, null);
         }
     }
 
@@ -46,9 +55,23 @@ public class PaymentController {
         int result = this.paymentService.insert(payment);
         log.info("create result :" + result);
         if (result > 0) {
-            return new CommonResult(200, "success", payment);
+            return new CommonResult(200, "success, serverport" + serverPort, payment);
         } else {
-            return new CommonResult(444, "fail", null);
+            return new CommonResult(444, "fail, serverport" + serverPort, null);
         }
+    }
+
+    @GetMapping(value = "/discovery")
+    public Object discovery() {
+        List<String> services = discoveryClient.getServices();
+        for (String service : services) {
+            log.info("* * * * * service:" + service);
+        }
+
+        List<ServiceInstance> instances = discoveryClient.getInstances("MYCLOUD-PAYMENT-SERVICE");
+        for (ServiceInstance instance : instances) {
+            log.info(instance.getServiceId() + "\t" + instance.getHost() + "\t" + instance.getPort() + "\t" + instance.getUri());
+        }
+        return this.discoveryClient;
     }
 }
