@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  * 2.FeignClient好像既可以调controller层，又可以调service层，待后续学习验证
  */
 @Component
-@FeignClient(value = "MYCLOUD-PAYMENT-SERVICE")
+@FeignClient(value = "MYCLOUD-PAYMENT-SERVICE") //服务名称大小写都可以
 public interface PaymentFeignService {
 
 

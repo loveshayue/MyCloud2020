@@ -1,0 +1,32 @@
+server:
+  port: 8001
+
+spring:
+  application:
+    name: mycloud-hystrix-payment-service
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/mycloud2020?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+
+
+mybatis:
+  type-aliases-package: com.atguigu.springcloud.entity #所有Entity别名类所在包
+  mapperLocations: classpath:mapper/*.xml
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:7001/eureka
+#      defaultZone: http://eureka7002.com:7002/eureka,http://eureka7001.com:7001/eureka
+  instance:
+    instance-id: hystrix-payment8001
+    prefer-ip-address: true  #访问路径可以显示IP地址
+    #向eureka Server发送心跳时间间隔。默认30S
+    lease-renewal-interval-in-seconds: 1
+    #eureka Server接收到最后一次心跳等待时间上限，超时将排除服务
+    lease-expiration-duration-in-seconds: 2

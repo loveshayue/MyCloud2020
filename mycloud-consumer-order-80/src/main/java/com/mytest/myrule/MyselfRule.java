@@ -16,7 +16,7 @@ public class MyselfRule {
         return new RandomRule(); //定义为随机 ，得学习下@Bean
     }
 
-
+    //ToDo
     /**
      * P42，Ribbon手写轮询算法，暂时未看，因需要了解cas的相关知识
      */
